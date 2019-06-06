@@ -13,6 +13,8 @@
         "start": "node packages/node_modules/node-red/red.js",
         "test": "grunt",
         "build": "grunt build",
+        "dev": "npm run _internal_dev -- --userDir=./",
+        "_internal_dev": "grunt dev ",
         "docs": "grunt docs"
     },
     "contributors": [

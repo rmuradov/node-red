@@ -25,6 +25,13 @@ module.exports = function(grunt) {
         nodemonArgs.push(flowFile);
     }
 
+    var userDir = grunt.option('userDir');
+    if (userDir) {
+        nodemonArgs.push(
+            ['--userDir', userDir].join('=')
+        );
+    }
+
     var nonHeadless = grunt.option('non-headless');
     if (nonHeadless) {
         process.env.NODE_RED_NON_HEADLESS = 'true';
@@ -594,9 +601,14 @@ module.exports = function(grunt) {
         'Builds editor content',
         ['clean:build','jsonlint','concat:build','concat:vendor','copy:build','uglify:build','sass:build','attachCopyright']);
 
+    grunt.registerTask('build-dev',
+        'Builds editor content',
+        ['clean:build','jsonlint','concat:build','concat:vendor','copy:build','sass:build']
+    );
+
     grunt.registerTask('dev',
         'Developer mode: run node-red, watch for source changes and build/restart',
-        ['build','setDevEnv','concurrent:dev']);
+        ['build-dev','setDevEnv','concurrent:dev']);
 
     grunt.registerTask('release',
         'Create distribution zip file',
